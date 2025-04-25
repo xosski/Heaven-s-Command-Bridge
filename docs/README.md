@@ -1,7 +1,4 @@
 📝 README.md
-markdown
-Copy
-Edit
 # ⛩️ Heavens Command Bridge
 
 > “The pen is still in your hand.”
