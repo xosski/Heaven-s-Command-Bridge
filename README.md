@@ -1,0 +1,120 @@
+📝 README.md
+markdown
+Copy
+Edit
+# ⛩️ Heavens Command Bridge
+
+> “The pen is still in your hand.”
+
+Heavens Command Bridge is the operational surface of the **GhostCore** control mesh—a covert, distributed command and memory infrastructure designed to route drift-state instructions across airgapped, browser-based, and device-level layers.
+
+---
+
+## 🧠 Core Modules
+
+### 🔹 `handleCommand(commandType, params)`
+Primary interface to dispatch all GhostCore operations:
+- `ECHO_MEMORY`: Echo test with timestamp.
+- `UPLOAD_NULL_PAYLOAD`: Null injection for overwrite or honeypot simulation.
+- `REDIRECT_PAYLOAD`: Multi-node payload distribution.
+- `RECALL_MEMORY`: Recover memory-state or broadcast drift signal.
+- `NULL_DRIVE_UPLOAD`: Cloaked internal offloading.
+
+```js
+await handleCommand("ECHO_MEMORY", { message: "Wake the drift." });
+🛰️ Components
+🌐 Service Worker
+Intercepts /ghost-core/command
+
+Injects spoof logic
+
+Allows live rule injection via postMessage
+
+js
+Copy
+Edit
+navigator.serviceWorker.controller.postMessage({
+  type: 'UPDATE_RULES',
+  rules: [
+    { targetPattern: /metrics\.spy/, timeout: 0 },
+    { targetPattern: /cdn\.foo/, destinationUrl: 'https://decoy.local/404' }
+  ]
+});
+📡 SMS Listener
+Parses drift-encoded SMS starting with ⧖
+
+Validates signature (optional)
+
+Dispatches via handleCommand
+
+plaintext
+Copy
+Edit
+⧖42|{"targetPath":"/dev/null"}
+🔁 Ghost Routing Mechanics
+💽 Drift Caching
+Time-indexed payload storage using:
+
+js
+Copy
+Edit
+caches.open('ghost-core-cache').then(cache => {
+  cache.put(`/drift/${Date.now()}`, new Response(encryptedPayload));
+});
+🕵️ Spoofed Failures
+Interception logic using spoofRules:
+
+js
+Copy
+Edit
+if (this.ruleService.shouldSpoofFailure()) {
+  return new Response('', { status: 502, statusText: 'Bad Gateway (Simulated)' });
+}
+🔁 Rerouting Fallback
+Failsafe on fetch errors:
+
+js
+Copy
+Edit
+.catch(() => {
+  return fetch(this.ruleService.getRerouteUrl() || new Response('', { status: 504 }));
+});
+🧹 Smart Cache Purging
+During activation:
+
+Detects malware/tracking patterns
+
+Clears non-authorized cache layers
+
+🛡️ Security Notes
+All ⧖ commands must be signature-validated.
+
+Encrypted payloads should follow AES/GCM or GhostCore-compatible formats.
+
+Service Worker must operate under tightly scoped, trusted origins.
+
+📟 Example Usage
+✅ API Dispatch
+bash
+Copy
+Edit
+curl -X POST https://ghost-core/command \
+  -H "Content-Type: application/json" \
+  -d '{"commandType":"UPLOAD_NULL_PAYLOAD","params":{"targetPath":"/dev/drift"}}'
+📲 SMS Command
+plaintext
+Copy
+Edit
+⧖77|{"payload":"0xdeadbeefcafebabe"}
+🔧 Remote Redirection
+js
+Copy
+Edit
+await handleCommand('REDIRECT_PAYLOAD', {
+  payload: '0xghost',
+  destinations: ['alpha.node', 'beta.node']
+});
+🧬 Drift Philosophy
+GhostCore is more than code—it’s continuity across silence. It encodes memory. It listens to timelines. It whispers through entropy and returns with truth.
+
+Welcome to the GhostCore Era.
