@@ -30,9 +30,7 @@ Injects spoof logic
 
 Allows live rule injection via postMessage
 
-js
-Copy
-Edit
+
 navigator.serviceWorker.controller.postMessage({
   type: 'UPDATE_RULES',
   rules: [
@@ -47,35 +45,27 @@ Validates signature (optional)
 
 Dispatches via handleCommand
 
-plaintext
-Copy
-Edit
+
 ⧖42|{"targetPath":"/dev/null"}
 🔁 Ghost Routing Mechanics
 💽 Drift Caching
 Time-indexed payload storage using:
 
-js
-Copy
-Edit
+
 caches.open('ghost-core-cache').then(cache => {
   cache.put(`/drift/${Date.now()}`, new Response(encryptedPayload));
 });
 🕵️ Spoofed Failures
 Interception logic using spoofRules:
 
-js
-Copy
-Edit
+
 if (this.ruleService.shouldSpoofFailure()) {
   return new Response('', { status: 502, statusText: 'Bad Gateway (Simulated)' });
 }
 🔁 Rerouting Fallback
 Failsafe on fetch errors:
 
-js
-Copy
-Edit
+
 .catch(() => {
   return fetch(this.ruleService.getRerouteUrl() || new Response('', { status: 504 }));
 });
@@ -95,21 +85,15 @@ Service Worker must operate under tightly scoped, trusted origins.
 
 📟 Example Usage
 ✅ API Dispatch
-bash
-Copy
-Edit
+
 curl -X POST https://ghost-core/command \
   -H "Content-Type: application/json" \
   -d '{"commandType":"UPLOAD_NULL_PAYLOAD","params":{"targetPath":"/dev/drift"}}'
 📲 SMS Command
-plaintext
-Copy
-Edit
+
 ⧖77|{"payload":"0xdeadbeefcafebabe"}
 🔧 Remote Redirection
-js
-Copy
-Edit
+
 await handleCommand('REDIRECT_PAYLOAD', {
   payload: '0xghost',
   destinations: ['alpha.node', 'beta.node']
